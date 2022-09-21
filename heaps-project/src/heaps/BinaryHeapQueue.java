@@ -21,6 +21,9 @@ public class BinaryHeapQueue implements IPriorityQueue
 
         //swim (and adjust the ordering of elements)
         swim(nextAvailableIndex);
+
+        nextAvailableIndex++;
+        size++;
     }
 
     private void swim(int curIndex)
@@ -55,7 +58,50 @@ public class BinaryHeapQueue implements IPriorityQueue
     @Override
     public int remove()
     {
+        //save the value at the root (highest priority)
+        int result = heap[1];
+
+        //replace the value at the root
+        heap[1] = heap[nextAvailableIndex - 1];
+        heap[nextAvailableIndex] = 0;
+
+        //sink and adjust our heap
+        sink(1);
+
         return 0;
+    }
+
+    private void sink(int curIndex)
+    {
+        //sink as long as the current index has a child
+        while (curIndex <= size / 2)
+        {
+            //indices of children
+            int leftChildIndex = 2 * curIndex;
+            int rightChildIndex = 2 * curIndex + 1;
+
+            //find the smaller child
+            int smallestChildIndex = leftChildIndex;
+            //if there is a right child and it's smaller
+            if (rightChildIndex < nextAvailableIndex &&
+                heap[rightChildIndex] < heap[leftChildIndex])
+            {
+                smallestChildIndex = rightChildIndex;
+            }
+
+            //figure out whether a child is smaller
+            if (heap[curIndex] > heap[smallestChildIndex])
+            {
+                swap(curIndex, smallestChildIndex);
+            }
+            else
+            {
+                break; //short-circuit if they are in order
+            }
+
+            //move to the smallest child and repeat our conditions
+            curIndex = smallestChildIndex;
+        }
     }
 
     @Override
@@ -80,5 +126,31 @@ public class BinaryHeapQueue implements IPriorityQueue
     public void clear()
     {
 
+    }
+
+    @Override
+    public String toString()
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        // Bracket for array
+        stringBuilder.append("[");
+
+        for (int i = 0; i < heap.length; i++)
+        {
+            // Add element to string
+            stringBuilder.append(heap[i]);
+
+            // No comma for last element
+            if (i != heap.length - 1)
+            {
+                stringBuilder.append(", ");
+            }
+        }
+
+        // Bracket for array
+        stringBuilder.append("]");
+
+        // Return StringBuilder as a String
+        return stringBuilder.toString();
     }
 }
