@@ -11,16 +11,23 @@ public class HeapDriver
         BinaryHeapQueue priorityQueue = new BinaryHeapQueue();
 
         priorityQueue.insert(7);
-        priorityQueue.insert(4);
-        priorityQueue.insert(2);
         priorityQueue.insert(1);
         priorityQueue.insert(11);
+        priorityQueue.insert(4);
+        priorityQueue.insert(2);
         priorityQueue.insert(8);
-        priorityQueue.insert(6);
+        priorityQueue.insert(9);
+        priorityQueue.insert(3);
+        priorityQueue.insert(10);
+
+        /*priorityQueue.insert(2);
+        priorityQueue.insert(-9);
+        priorityQueue.insert(-5);*/
 
         System.out.println(priorityQueue);
 
-        for (int i = 0; i < 3; i++)
+        //empty the queue
+        while (!priorityQueue.isEmpty())
         {
             System.out.println(priorityQueue.remove());
         }

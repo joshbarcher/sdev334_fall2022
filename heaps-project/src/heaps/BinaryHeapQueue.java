@@ -58,18 +58,18 @@ public class BinaryHeapQueue implements IPriorityQueue
     @Override
     public int remove()
     {
+        checkIfEmpty();
+
         //save the value at the root (highest priority)
         int result = heap[1];
 
         //replace the value at the root
         heap[1] = heap[nextAvailableIndex - 1];
-        heap[nextAvailableIndex] = 0;
+        heap[nextAvailableIndex - 1] = 0;
 
-        //sink and adjust our heap
-        sink(1);
-
-        //adjust our counters
+        //sink and adjust our heap and adjust our counters
         size--;
+        sink(1);
         nextAvailableIndex--;
 
         return result;
@@ -87,7 +87,7 @@ public class BinaryHeapQueue implements IPriorityQueue
             //find the smaller child
             int smallestChildIndex = leftChildIndex;
             //if there is a right child and it's smaller
-            if (rightChildIndex < nextAvailableIndex &&
+            if (rightChildIndex < nextAvailableIndex - 1 &&
                 heap[rightChildIndex] < heap[leftChildIndex])
             {
                 smallestChildIndex = rightChildIndex;
@@ -111,19 +111,29 @@ public class BinaryHeapQueue implements IPriorityQueue
     @Override
     public int peek()
     {
-        return 0;
+        checkIfEmpty();
+
+        return heap[1];
+    }
+
+    private void checkIfEmpty()
+    {
+        if (size == 0)
+        {
+            throw new IllegalStateException("The heap is empty");
+        }
     }
 
     @Override
     public int size()
     {
-        return 0;
+        return size;
     }
 
     @Override
     public boolean isEmpty()
     {
-        return false;
+        return size == 0;
     }
 
     @Override
