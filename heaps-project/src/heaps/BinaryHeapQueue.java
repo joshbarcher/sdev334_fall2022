@@ -68,7 +68,11 @@ public class BinaryHeapQueue implements IPriorityQueue
         //sink and adjust our heap
         sink(1);
 
-        return 0;
+        //adjust our counters
+        size--;
+        nextAvailableIndex--;
+
+        return result;
     }
 
     private void sink(int curIndex)

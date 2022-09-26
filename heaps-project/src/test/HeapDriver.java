@@ -2,6 +2,8 @@ package test;
 
 import heaps.BinaryHeapQueue;
 
+import java.util.PriorityQueue;
+
 public class HeapDriver
 {
     public static void main(String[] args)
