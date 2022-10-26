@@ -45,31 +45,24 @@ public class MyGraph<V> implements IWeightedUndirectedGraph<V>
             return false;
         }
 
-        //add the new edge at the start of both of the adjacency lists
-        Node oldHeadFirst = adjacencyLists.get(first);
-        Node oldHeadSecond = adjacencyLists.get(second);
+        addDirectedEdge(first, second, weight);
+        addDirectedEdge(second, first, weight);
 
-        if (oldHeadFirst == null)
+        return true;
+    }
+
+    private void addDirectedEdge(V first, V second, int weight)
+    {
+        Node oldHead = adjacencyLists.get(first);
+        if (oldHead == null)
         {
             adjacencyLists.put(first, new Node(second, weight));
         }
         else
         {
             //put a new node at the start o fthe linked list
-            adjacencyLists.put(first, new Node(second, weight, oldHeadFirst));
+            adjacencyLists.put(first, new Node(second, weight, oldHead));
         }
-
-        if (oldHeadSecond == null)
-        {
-            adjacencyLists.put(second, new Node(first, weight));
-        }
-        else
-        {
-            //put a new node at the start o fthe linked list
-            adjacencyLists.put(second, new Node(first, weight, oldHeadSecond));
-        }
-
-        return true;
     }
 
     @Override
@@ -81,6 +74,22 @@ public class MyGraph<V> implements IWeightedUndirectedGraph<V>
     @Override
     public boolean containsEdge(V first, V second)
     {
+        //preconditions? - make sure the vertices are in the graph
+        if (containsVertex(first) && containsVertex(second))
+        {
+            //step #1 - get the adjacency list of first
+            Node current = adjacencyLists.get(first);
+
+            //step #2 - loop over the list and look for second in the list
+            while (current != null)
+            {
+                if (current.otherVertex.equals(second))
+                {
+                    return true;
+                }
+                current = current.next;
+            }
+        }
         return false;
     }
 
