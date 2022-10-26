@@ -8,6 +8,7 @@ import java.util.Map;
 public class MyGraph<V> implements IWeightedUndirectedGraph<V>
 {
     private Map<V, Node> adjacencyLists = new HashMap<>();
+    private int edgeCount = 0;
 
     @Override
     public boolean addVertex(V element)
@@ -47,6 +48,7 @@ public class MyGraph<V> implements IWeightedUndirectedGraph<V>
 
         addDirectedEdge(first, second, weight);
         addDirectedEdge(second, first, weight);
+        edgeCount++;
 
         return true;
     }
@@ -102,19 +104,25 @@ public class MyGraph<V> implements IWeightedUndirectedGraph<V>
     @Override
     public boolean removeEdge(V first, V second)
     {
+        //step #1 - double check that the vertices are in the graph
+        //step #2 - remove directed edge (first, second)
+        //step #3 - remove directed edge (second, first)
+        //step #4 - TODO decrement the edge count!
+
         return false;
     }
 
     @Override
     public int vertexSize()
     {
-        return 0;
+        //the same as the number of keys in the map
+        return adjacencyLists.size();
     }
 
     @Override
     public int edgeSize()
     {
-        return 0;
+        return edgeCount;
     }
 
     @Override

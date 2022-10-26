@@ -30,5 +30,8 @@ public class TestGraph
         System.out.println(stringGraph.containsEdge("a", "e"));
         System.out.println(stringGraph.containsEdge("c", "d"));
         System.out.println(stringGraph.containsEdge("b", "e"));
+
+        System.out.println("|V| = " + stringGraph.vertexSize());
+        System.out.println("|E| = " + stringGraph.edgeSize());
     }
 }
