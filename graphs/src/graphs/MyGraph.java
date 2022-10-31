@@ -1,11 +1,11 @@
 package graphs;
 
-import adts.IWeightedUndirectedGraph;
+import adts.IGraph;
+import org.w3c.dom.Node;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
-public class MyGraph<V> implements IWeightedUndirectedGraph<V>
+public class MyGraph<V> implements IGraph<V>
 {
     private Map<V, Node> adjacencyLists = new HashMap<>();
     private int edgeCount = 0;
@@ -113,6 +113,18 @@ public class MyGraph<V> implements IWeightedUndirectedGraph<V>
     }
 
     @Override
+    public Set<V> vertices()
+    {
+        return adjacencyLists.keySet();
+    }
+
+    @Override
+    public Set<Edge<V>> edges()
+    {
+        return null;
+    }
+
+    @Override
     public int vertexSize()
     {
         //the same as the number of keys in the map
@@ -126,9 +138,49 @@ public class MyGraph<V> implements IWeightedUndirectedGraph<V>
     }
 
     @Override
-    public int degree(V vertex)
+    public List<V> dfs(V source)
     {
-        return 0;
+        if (vertices().isEmpty())
+        {
+            return new ArrayList<>();
+        }
+
+        List<V> traversalResults = new ArrayList<>();
+        Set<V> visitedVerts = new HashSet<>();
+
+        dfsRecursive(source, traversalResults, visitedVerts);
+
+        return traversalResults;
+    }
+
+    //a list for our results - maintains the traversal order
+    //a set for determining what we've seen already - fast!
+    private void dfsRecursive(V current, List<V> traversal, Set<V> visited)
+    {
+        //only traverse to this vertex if I haven't seen it before
+        if (!visited.contains(current))
+        {
+            //mark that we have visited this vertex
+            traversal.add(current);
+            visited.add(current);
+
+            //try to visit adjacent vertices
+            Node neighbor = adjacencyLists.get(current);
+            while (neighbor != null)
+            {
+                //visit this neighbor
+                dfsRecursive(neighbor.otherVertex, traversal, visited);
+
+                //then move on the the next
+                neighbor = neighbor.next;
+            }
+        }
+    }
+
+    @Override
+    public List<V> bfs(V source)
+    {
+        return null;
     }
 
     //inner classes

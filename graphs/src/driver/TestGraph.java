@@ -2,9 +2,28 @@ package driver;
 
 import graphs.MyGraph;
 
+import java.util.List;
+
 public class TestGraph
 {
     public static void main(String[] args)
+    {
+        //create our test graph
+        MyGraph<Character> charGraph = new MyGraph<>();
+
+        charGraph.addVertex('A', 'B', 'C', 'D', 'E', 'F');
+        charGraph.addEdge('A', 'B', 1);
+        charGraph.addEdge('B', 'C', 1);
+        charGraph.addEdge('C', 'D', 1);
+        charGraph.addEdge('C', 'E', 1);
+        charGraph.addEdge('C', 'F', 1);
+        charGraph.addEdge('E', 'F', 1);
+
+        List<Character> traversal = charGraph.dfs('C');
+        System.out.println(traversal);
+    }
+
+    private static void firstGraphTests()
     {
         String[] strings = {"a", "b", "c", "d", "e", "f"};
         MyGraph<String> stringGraph = new MyGraph<>();
