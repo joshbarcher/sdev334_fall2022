@@ -19,7 +19,7 @@ public class TestGraph
         charGraph.addEdge('C', 'F', 1);
         charGraph.addEdge('E', 'F', 1);
 
-        List<Character> traversal = charGraph.dfs('C');
+        List<Character> traversal = charGraph.bfs('C');
         System.out.println(traversal);
     }
 

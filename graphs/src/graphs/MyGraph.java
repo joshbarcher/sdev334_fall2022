@@ -180,7 +180,37 @@ public class MyGraph<V> implements IGraph<V>
     @Override
     public List<V> bfs(V source)
     {
-        return null;
+        //create a few helper structures
+        List<V> traversal = new ArrayList<>();
+        Set<V> visited = new HashSet<>();
+        Queue<V> bfsQueue = new LinkedList<>();
+
+        //perform BFS
+        bfsQueue.add(source);
+        int size = vertexSize();
+        while (traversal.size() < size)
+        {
+            V next = bfsQueue.remove();
+            if (!visited.contains(next))
+            {
+                //visite the vertex
+                visited.add(next);
+                traversal.add(next);
+
+                //add the neighbors to the queue
+                Node neighbor = adjacencyLists.get(next);
+                while (neighbor != null)
+                {
+                    if (!visited.contains(neighbor.otherVertex))
+                    {
+                        bfsQueue.add(neighbor.otherVertex);
+                    }
+                    neighbor = neighbor.next;
+                }
+            }
+        }
+
+        return traversal;
     }
 
     //inner classes
