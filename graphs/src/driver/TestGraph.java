@@ -3,6 +3,7 @@ package driver;
 import graphs.MyGraph;
 
 import java.util.List;
+import java.util.Map;
 
 public class TestGraph
 {
@@ -19,8 +20,15 @@ public class TestGraph
         charGraph.addEdge('C', 'F', 1);
         charGraph.addEdge('E', 'F', 1);
 
-        List<Character> traversal = charGraph.bfs('C');
+        Map<Character, Character> traversal = charGraph.dfs('C');
         System.out.println(traversal);
+
+        Character current = 'E';
+        while (current != null)
+        {
+            System.out.println(current);
+            current = traversal.get(current);
+        }
     }
 
     private static void firstGraphTests()

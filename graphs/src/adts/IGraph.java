@@ -3,6 +3,7 @@ package adts;
 import graphs.Edge;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public interface IGraph<V>
@@ -22,7 +23,7 @@ public interface IGraph<V>
     Set<Edge<V>> edges();
 
     //traversal algorithms
-    List<V> dfs(V source);
+    Map<V, V> dfs(V source);
     List<V> bfs(V source);
 }
 

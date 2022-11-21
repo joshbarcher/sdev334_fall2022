@@ -138,30 +138,30 @@ public class MyGraph<V> implements IGraph<V>
     }
 
     @Override
-    public List<V> dfs(V source)
+    public Map<V, V> dfs(V source)
     {
         if (vertices().isEmpty())
         {
-            return new ArrayList<>();
+            return new HashMap<>();
         }
 
-        List<V> traversalResults = new ArrayList<>();
+        Map<V, V> traversalResults = new HashMap<>();
         Set<V> visitedVerts = new HashSet<>();
 
-        dfsRecursive(source, traversalResults, visitedVerts);
+        dfsRecursive(source, traversalResults, visitedVerts, null);
 
         return traversalResults;
     }
 
     //a list for our results - maintains the traversal order
     //a set for determining what we've seen already - fast!
-    private void dfsRecursive(V current, List<V> traversal, Set<V> visited)
+    private void dfsRecursive(V current, Map<V, V> traversal, Set<V> visited, V previous)
     {
         //only traverse to this vertex if I haven't seen it before
         if (!visited.contains(current))
         {
             //mark that we have visited this vertex
-            traversal.add(current);
+            traversal.put(current, previous);
             visited.add(current);
 
             //try to visit adjacent vertices
@@ -169,7 +169,7 @@ public class MyGraph<V> implements IGraph<V>
             while (neighbor != null)
             {
                 //visit this neighbor
-                dfsRecursive(neighbor.otherVertex, traversal, visited);
+                dfsRecursive(neighbor.otherVertex, traversal, visited, current);
 
                 //then move on the the next
                 neighbor = neighbor.next;
